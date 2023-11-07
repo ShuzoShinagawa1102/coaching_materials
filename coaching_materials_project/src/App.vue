@@ -1,36 +1,46 @@
 <template>
-  <h1 v-bind:title="message" v-bind:class="{ red: isRed }">{{ title }}</h1>
-  <h2>Data of {{ fullName }}</h2>
-  <p>Name: {{ fullName }}</p>
+  <h1>终于App</h1>
+  <input type="text" v-model="newTodoText"/>
+  <button @click="AddTodos">Add</button>
+  <button @click="ClearDoneTodos">Delete done</button>
+  <p v-if="todos.length === 0">There is no todos right now!</p>
+  <ul v-else>
+    <li v-for="todo in todos">
+      <input type="checkbox" v-model="todo.isDone">
+      <span v-bind:class="{isdone : todo.isDone}">{{ todo.text }}</span>
+    </li>
+  </ul>
 
 </template>
 
 <script>
-import { computed } from 'vue';
-
-  export default {
-    data() {
-      return {
-        title: "Info About Me",
-        message: "I like you.",
-        isRed: true,
-        user: {
-          firstName: "Shuzo",
-          lastName: "Shinagawa"
-        },
-      }
+export default {
+  data() {
+    return {
+      newTodoText: "",
+      todos: [
+        // { isDone: Boolean, text: String }
+      ],
+    }
+  },
+  methods: {
+    AddTodos() {
+      if (!this.newTodoText) return alert("Make sure your todo is filled!")
+      this.todos.push({
+        isDone: false,
+        text: this.newTodoText,
+      })
+      this.newTodoText = ""
     },
-    
-    computed: {
-      fullName() {
-        return this.user.firstName + " " + this.user.lastName
-      },
+    ClearDoneTodos() {
+      this.todos = this.todos.filter((todo) => !todo.isDone)
     },
-  }
+  },
+}
 </script>
 
 <style>
-  .red {
-    color: red;
+  .isdone {
+    text-decoration: line-through;
   }
 </style>
