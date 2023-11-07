@@ -1,30 +1,36 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+  <h1 v-bind:title="message" v-bind:class="{ red: isRed }">{{ title }}</h1>
+  <h2>Data of {{ fullName }}</h2>
+  <p>Name: {{ fullName }}</p>
+
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
+<script>
+import { computed } from 'vue';
+
+  export default {
+    data() {
+      return {
+        title: "Info About Me",
+        message: "I like you.",
+        isRed: true,
+        user: {
+          firstName: "Shuzo",
+          lastName: "Shinagawa"
+        },
+      }
+    },
+    
+    computed: {
+      fullName() {
+        return this.user.firstName + " " + this.user.lastName
+      },
+    },
+  }
+</script>
+
+<style>
+  .red {
+    color: red;
+  }
 </style>
